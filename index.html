@@ -562,8 +562,8 @@
 
                         <form name="submit-to-google-sheet">
                            <input name="email" type="email" placeholder="Email" required>
-                           <input name="first Name" type="text" placeholder="First Name">
-                           <input name="last Name" type="text" placeholder="Last Name">
+                           <input name="firstName" type="text" placeholder="First Name">
+                           <input name="lastName" type="text" placeholder="Last Name">
                            <button type="submit">Send</button>
                         </form>
 			  </div>
@@ -686,7 +686,7 @@
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => console.log('Success!', response))
         .catch(error => console.error('Error!', error.message))
-       
+       $('#googleform').replaceWith( "<h2>Thank you for SUBSCRIBE</h2>" );;
     })
   </script>
 
