@@ -677,7 +677,7 @@
   
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbykdoNBlC1IC3JEngtSaZajdlhoiCexcC9647UepKNX8T_SC74j/exec'
-    const form = document.forms['submit-to-google-sheet1']
+    const form = document.forms['submit-to-google-sheet']
   
     form.addEventListener('submit', e => {
       e.preventDefault()
@@ -695,18 +695,7 @@
   <button type="submit">Send</button>
 </form> -->
 
-   <script>
-  const scriptURL = 'https://docs.google.com/spreadsheets/d/1BOjILSGWAtj1pH5D6NojNRH_xwMkwxI-Sof9pe28BTM/edit#gid=1580035112'
-  const form = document.forms['submit-to-google-sheet2']
-
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => console.log('Success!', response))
-      .catch(error => console.error('Error!', error.message))
-     $('#googleform').replaceWith( "<h2>Thank you for message</h2>" );;
-  })
-   </script>
+  
 
 
 
