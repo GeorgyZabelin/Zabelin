@@ -438,7 +438,7 @@
               <div class="col-md-4">
                 <div class="dark-box box-hover">
                   <h2><i class="fa fa-map-marker"></i><span>Address</span></h2>
-                  <p>Cicar Sigal 2A, Ashdod,Israel</p>
+                  <p>Kikar Sigal, Ashdod,Israel</p>
                 </div>
               </div>
 			  <!-- Phone Number Box -->
@@ -459,17 +459,23 @@
 			<div class="row">
 			  <!-- Google Maps (Change your Settings below) -->
 			  <div class="col-md-6">
-			    <div id="googlemaps"></div>
+         <!--  <div id="googlemaps"></div> -->
+          <div id="mapdiv" style="height:297px; margin-top: -20px !important; "></div>
+        
+
+
+
+          
 			  </div>
 			  <!-- Contact Form -->
 			  <div class="col-md-6 contact">
-			     <form role="form" name="submit-to-google-sheet">
+			     <form role="form" name="submit-to-google-sheet" id = "myRequestForm">
 				            <!-- Name -->
                             <div class="row">
                                 <div class="col-md-6">
 								    <!-- E-Mail -->
                                     <div class="form-group">
-                                        <input name="userName" type="text" class="form-control" placeholder="Your name">
+                                        <input name="userName" type="text" class="form-control" placeholder="Your name" id="userName">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -548,16 +554,15 @@
 	<!-- Lightbox.js -->
     <script src="assets/lightbox/js/lightbox.min.js"></script>
     <!-- Google Maps --> 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeKBBPJTG3v5w3cNPAgM6ZsJiPyL1mP_o&amp;sensor=false"></script>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmyX1K7t0px9Aiw0OrKwOxvepcPA-G7w0&amp;sensor=false"></script> -->
 	<!-- Theme JavaScript Core -->
 	<script src="js/main.js"></script>
 	<script src="js/script.js"></script>
 
 	<!-- GOOGLE MAPS DATA -->
-    <script type="text/javascript">
+<!--     <script type="text/javascript">
     // When the window has finished loading create our google map below
         google.maps.event.addDomListener(window, 'load', init);
-    
         function init() {
             // Basic options for a simple Google Map
             // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
@@ -583,8 +588,30 @@
             var map = new google.maps.Map(mapElement, mapOptions);
         }
 	
+    </script> -->
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script>
+      map = new OpenLayers.Map("mapdiv");
+      map.addLayer(new OpenLayers.Layer.OSM());
+  
+      var lonLat = new OpenLayers.LonLat(34.64638, 31.7935)
+            .transform(
+              new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+              map.getProjectionObject() // to Spherical Mercator Projection
+            );
+            
+      var zoom=10;
+  
+      var markers = new OpenLayers.Layer.Markers( "Markers" );
+      map.addLayer(markers);
+      
+      markers.addMarker(new OpenLayers.Marker(lonLat));
+      
+      map.setCenter (lonLat, zoom);
     </script>
-	
+	<style>
+    .olControlAttribution{bottom: 3px;}
+  </style>
 	<!-- TEXT ROTATOR SETTINGS -->
     <script type="text/javascript">
     $(".rotate").textrotator({
@@ -595,37 +622,22 @@
     </script>
 
 
-<!-- 	<form name="submit-to-google-sheet">
-    <input name="email" type="email" placeholder="Email" required>
-    <button type="submit">Send</button>
-  </form> -->
-  
-  <script>
+  <!--Form Submit Settings-->
+  <script type="text/javascript">
     const scriptURL = 'https://script.google.com/macros/s/AKfycbykdoNBlC1IC3JEngtSaZajdlhoiCexcC9647UepKNX8T_SC74j/exec'
     const form = document.forms['submit-to-google-sheet']
-  
+    var reqestFormDiv = document.getElementById("myRequestForm");
     form.addEventListener('submit', e => {
       e.preventDefault()
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => console.log('Success!', response))
         .catch(error => console.error('Error!', error.message))
-      
+        var userName = document.getElementById("userName").value;
+
+       // console.log(userName);
+        var requestSubmittedHTML = "<h1 class='arrow'> Dear " + userName + ", thanks for being awesome!</h1>"; 
+        reqestFormDiv.innerHTML = requestSubmittedHTML;
     })
   </script>
-
-
-
-
-<!-- <form name="submit-to-google-sheet">
-  <input name="email" type="email" placeholder="Email" required>
-  <input name="firstName" type="text" placeholder="First Name">
-  <input name="lastName" type="text" placeholder="Last Name">
-  <button type="submit">Send</button>
-</form> -->
-
-  
-
-
-
-    </body>
+  </body>
 </html>
